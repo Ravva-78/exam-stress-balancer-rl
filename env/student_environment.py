@@ -92,6 +92,12 @@ class StudentEnvironment:
 
             reward = revision_gain * 8 + 1
 
+        elif action == 2:  # Sleep/ break
+            self.state["fatigue"] = max(0, fatigue - 15)
+            self.state["stress"] = max(0, stress - 10)
+
+            reward = 2  #recovery is good, but no learning
+
         # ---------- TIME ----------
         self.state["days_left"] -= 1
         self.current_day += 1

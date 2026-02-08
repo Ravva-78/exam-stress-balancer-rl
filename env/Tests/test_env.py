@@ -5,8 +5,11 @@ state = env.reset()
 
 print("Initial:", state)
 
+actions = [0, 1, 2]
+
 for day in range(3):
-    action = day % 2   # 0, 1, 0
+    action = actions[day]
     state, reward, done = env.step(action)
     print(f"Day {day+1}: Action={action}, State={state}, Reward={reward:.2f}")
+
 
