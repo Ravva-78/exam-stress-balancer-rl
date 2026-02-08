@@ -98,6 +98,17 @@ class StudentEnvironment:
 
             reward = 2  #recovery is good, but no learning
 
+
+    #-----------burnout penalty ----------
+        if self.state["fatigue"] >= 80 or self.state["stress"] >= 70:
+            burnout_penalty = 3
+
+            reward -= burnout_penalty
+
+            #cognitive overload reduces effective retention
+            self.state["retention"] = max(0.0, self.state["retention"] - 0.02)
+
+
         # ---------- TIME ----------
         self.state["days_left"] -= 1
         self.current_day += 1

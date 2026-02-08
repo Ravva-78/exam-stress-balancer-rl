@@ -5,7 +5,7 @@ state = env.reset()
 
 print("Initial:", state)
 
-actions = [0, 1, 2]
+actions = [0, 0, 0]  # study continuously → burnout
 
 for day in range(3):
     action = actions[day]
