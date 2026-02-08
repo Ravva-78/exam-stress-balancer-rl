@@ -65,30 +65,43 @@ class StudentEnvironment:
 
         return self.state
 
-    def step(self, action: int) -> Tuple[Dict[str, float | int | str], float, bool]:
-        """
-        Apply an action to the environment.
-
-        Args:
-            action (int): Action index chosen by the agent.
-
-        Returns:
-            next_state (dict): Updated state after action.
-            reward (float): Reward obtained from the action.
-            done (bool): Whether the episode (exam period) is over.
-        """
-        # Placeholder for state transition logic
-        # (Will be implemented in the next step)
+    def step(self, action: int):
         reward = 0.0
 
-        # Decrease remaining days
+        fatigue = self.state["fatigue"]
+        stress = self.state["stress"]
+        retention = self.state["retention"]
+
+        # ---------- STUDY ----------
+        if action == 0:
+            learning_gain = 0.1 * (1 - fatigue / 100)
+
+            self.state["retention"] = min(1.0, retention + learning_gain)
+            self.state["fatigue"] = min(100, fatigue + 10)
+            self.state["stress"] = min(100, stress + 5)
+
+            reward = learning_gain * 10 - (self.state["stress"] - stress) * 0.2
+
+        # ---------- REVISE ----------
+        elif action == 1:
+            revision_gain = 0.05
+
+            self.state["retention"] = min(1.0, retention + revision_gain)
+            self.state["fatigue"] = max(0, fatigue - 5)
+            self.state["stress"] = max(0, stress - 3)
+
+            reward = revision_gain * 8 + 1
+
+        # ---------- TIME ----------
         self.state["days_left"] -= 1
         self.current_day += 1
-
-        # Check if exam period is over
         done = self.state["days_left"] <= 0
 
         return self.state, reward, done
+
+    
+
+
 
     def get_state(self) -> Dict[str, float | int | str]:
         """
@@ -110,3 +123,5 @@ class StudentEnvironment:
             str: Action description.
         """
         return self.actions.get(action, "unknown")
+
+    
