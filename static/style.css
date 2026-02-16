@@ -1,0 +1,614 @@
+
+
+/* ============================================
+   CSS Variables & Reset
+   ============================================ */
+:root {
+    --color-primary: #667eea;
+    --color-secondary: #764ba2;
+    --color-accent: #f093fb;
+    --color-text-dark: #1a202c;
+    --color-text-medium: #4a5568;
+    --color-text-light: #718096;
+    --color-white: #ffffff;
+    --color-glass: rgba(255, 255, 255, 0.15);
+    --color-glass-border: rgba(255, 255, 255, 0.3);
+    
+    --shadow-sm: 0 2px 8px rgba(102, 126, 234, 0.08);
+    --shadow-md: 0 8px 24px rgba(102, 126, 234, 0.12);
+    --shadow-lg: 0 16px 48px rgba(102, 126, 234, 0.18);
+    --shadow-xl: 0 24px 64px rgba(102, 126, 234, 0.25);
+    
+    --blur-sm: blur(8px);
+    --blur-md: blur(16px);
+    --blur-lg: blur(24px);
+    
+    --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--color-text-dark);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    background: linear-gradient(135deg, 
+        #ffeef8 0%, 
+        #e0d4ff 25%, 
+        #d4e7ff 50%, 
+        #ffe8f0 75%, 
+        #f0e4ff 100%
+    );
+    background-attachment: fixed;
+}
+
+/* ============================================
+   Animated Background Orbs
+   ============================================ */
+.background-orbs {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.4;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+.orb-1 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(102, 126, 234, 0.5) 0%, rgba(102, 126, 234, 0) 70%);
+    top: -10%;
+    right: -10%;
+    animation: float-1 18s infinite;
+}
+
+.orb-2 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(240, 147, 251, 0.5) 0%, rgba(240, 147, 251, 0) 70%);
+    bottom: -5%;
+    left: -5%;
+    animation: float-2 15s infinite;
+}
+
+.orb-3 {
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(118, 75, 162, 0.4) 0%, rgba(118, 75, 162, 0) 70%);
+    top: 40%;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: float-3 20s infinite;
+}
+
+@keyframes float-1 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-30px, 30px) scale(1.1); }
+}
+
+@keyframes float-2 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(40px, -40px) scale(1.15); }
+}
+
+@keyframes float-3 {
+    0%, 100% { transform: translate(-50%, 0) scale(1); }
+    50% { transform: translate(-50%, -30px) scale(1.08); }
+}
+
+/* ============================================
+   Container & Layout
+   ============================================ */
+.container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    position: relative;
+    z-index: 1;
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   Header
+   ============================================ */
+.header {
+    text-align: center;
+    margin-bottom: 48px;
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+
+.logo-mark {
+    display: inline-flex;
+    margin-bottom: 20px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 2.75rem;
+    font-weight: 500;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+}
+
+.subtitle {
+    font-size: 1.125rem;
+    color: var(--color-text-medium);
+    font-weight: 300;
+    letter-spacing: 0.01em;
+}
+
+/* ============================================
+   Glass Card
+   ============================================ */
+.glass-card {
+    background: var(--color-glass);
+    backdrop-filter: var(--blur-md);
+    -webkit-backdrop-filter: var(--blur-md);
+    border-radius: 28px;
+    padding: 48px;
+    border: 1.5px solid var(--color-glass-border);
+    box-shadow: var(--shadow-xl),
+                inset 0 1px 1px rgba(255, 255, 255, 0.5);
+    position: relative;
+    overflow: hidden;
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+
+.glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.8) 50%, 
+        transparent 100%
+    );
+}
+
+/* ============================================
+   Form Styles
+   ============================================ */
+.form {
+    position: relative;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+    margin-bottom: 28px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-group-full {
+    grid-column: 1 / -1;
+}
+
+.form-label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.label-text {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-text-dark);
+    letter-spacing: -0.01em;
+}
+
+.label-hint {
+    font-size: 0.8125rem;
+    color: var(--color-text-light);
+    font-weight: 300;
+}
+
+/* ============================================
+   Input Styles
+   ============================================ */
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.form-input {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 1rem;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 400;
+    color: var(--color-text-dark);
+    background: rgba(255, 255, 255, 0.6);
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
+    border-radius: 14px;
+    outline: none;
+    transition: all var(--transition-base);
+    backdrop-filter: blur(8px);
+}
+
+.form-input::placeholder {
+    color: var(--color-text-light);
+    opacity: 0.6;
+}
+
+.form-input:focus {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1),
+                0 4px 12px rgba(102, 126, 234, 0.15);
+    transform: translateY(-1px);
+}
+
+.input-unit {
+    position: absolute;
+    right: 16px;
+    font-size: 0.875rem;
+    color: var(--color-text-light);
+    font-weight: 500;
+    pointer-events: none;
+}
+
+/* ============================================
+   Select Styles
+   ============================================ */
+.select-wrapper {
+    position: relative;
+}
+
+.form-select {
+    width: 100%;
+    padding: 14px 40px 14px 16px;
+    font-size: 1rem;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 400;
+    color: var(--color-text-dark);
+    background: rgba(255, 255, 255, 0.6);
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
+    border-radius: 14px;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    transition: all var(--transition-base);
+    backdrop-filter: blur(8px);
+}
+
+.form-select:focus {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1),
+                0 4px 12px rgba(102, 126, 234, 0.15);
+    transform: translateY(-1px);
+}
+
+.form-select option {
+    background: var(--color-white);
+    color: var(--color-text-dark);
+    padding: 12px;
+}
+
+.select-arrow {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-light);
+    pointer-events: none;
+    transition: transform var(--transition-fast);
+}
+
+.form-select:focus ~ .select-arrow {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+/* ============================================
+   Submit Button
+   ============================================ */
+.submit-button {
+    width: 100%;
+    padding: 16px 32px;
+    font-size: 1.0625rem;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    color: var(--color-white);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 36px;
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4),
+                inset 0 1px 1px rgba(255, 255, 255, 0.3);
+    transition: all var(--transition-base);
+    position: relative;
+    overflow: hidden;
+}
+
+.submit-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.2) 50%, 
+        transparent 100%
+    );
+    transition: left 0.6s ease;
+}
+
+.submit-button:hover::before {
+    left: 100%;
+}
+
+.submit-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(102, 126, 234, 0.5),
+                inset 0 1px 1px rgba(255, 255, 255, 0.3);
+}
+
+.submit-button:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+}
+
+.button-text {
+    position: relative;
+    z-index: 1;
+}
+
+.button-icon {
+    position: relative;
+    z-index: 1;
+    transition: transform var(--transition-fast);
+}
+
+.submit-button:hover .button-icon {
+    transform: translateX(4px);
+}
+
+/* ============================================
+   Result Card
+   ============================================ */
+.result-card {
+    margin-top: 40px;
+    background: var(--color-glass);
+    backdrop-filter: var(--blur-md);
+    -webkit-backdrop-filter: var(--blur-md);
+    border-radius: 28px;
+    padding: 40px;
+    border: 1.5px solid var(--color-glass-border);
+    box-shadow: var(--shadow-lg);
+    text-align: center;
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+}
+
+.result-icon {
+    display: inline-flex;
+    margin-bottom: 20px;
+    animation: scaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.result-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 1.75rem;
+    font-weight: 500;
+    color: var(--color-text-dark);
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+}
+
+.result-content {
+    margin-top: 20px;
+}
+
+.result-text {
+    font-size: 1.0625rem;
+    color: var(--color-text-medium);
+    line-height: 1.7;
+    font-weight: 300;
+}
+
+/* ============================================
+   Footer
+   ============================================ */
+.footer {
+    margin-top: 48px;
+    text-align: center;
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+}
+
+.footer-text {
+    font-size: 0.875rem;
+    color: var(--color-text-light);
+    font-weight: 300;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+@media (max-width: 768px) {
+    .container {
+        padding: 24px 16px;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .glass-card {
+        padding: 32px 24px;
+        border-radius: 24px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .result-card {
+        padding: 32px 24px;
+        border-radius: 24px;
+    }
+
+    .result-title {
+        font-size: 1.5rem;
+    }
+
+    .orb-1, .orb-2, .orb-3 {
+        width: 300px;
+        height: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 1.75rem;
+    }
+
+    .glass-card {
+        padding: 24px 20px;
+    }
+
+    .form-input,
+    .form-select {
+        font-size: 0.9375rem;
+        padding: 12px 14px;
+    }
+
+    .submit-button {
+        padding: 14px 28px;
+        font-size: 1rem;
+    }
+
+    .result-card {
+        padding: 28px 20px;
+    }
+}
+
+/* ============================================
+   Result Action Colors
+   ============================================ */
+
+.text-study {
+    color: #4f46e5;
+    font-weight: 600;
+}
+
+.text-revise {
+    color: #059669;
+    font-weight: 600;
+}
+
+.text-sleep {
+    color: #9333ea;
+    font-weight: 600;
+}
+
+.text-break {
+    color: #d97706;
+    font-weight: 600;
+}
+
+.text-study { color: #4f46e5; }
+.text-revise { color: #059669; }
+.text-sleep { color: #9333ea; }
+.text-break { color: #d97706; }
+
+
+/* ============================================
+   Accessibility & Interactions
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+.form-input:focus-visible,
+.form-select:focus-visible,
+.submit-button:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
