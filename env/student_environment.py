@@ -13,7 +13,6 @@ This file only defines the environment structure.
 No reinforcement learning logic is implemented here.
 """
 
-from turtle import done
 from typing import Dict, Tuple
 import random
 
