@@ -1,0 +1,13 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environments
+.venv/
+venv/
+
+# System files
+.DS_Store
+
+# RL policy (optional - we may re-add later)
+*.pkl
